@@ -1,0 +1,21 @@
+---
+
+- name: Ensure systemd unit is enabled and restarted
+  service:
+    name: "{{ item }}"
+    enabled: yes
+    state: started
+  with_items:
+    - php-fpm
+    - nginx
+  when: "{{ not is_docker }}"
+
+- name: Create Supervisor config for Docker containers
+  template:
+    src: supervisor_nginx_php.ini.j2
+    dest: "/etc/supervisord.d/nginx_php_fpm.ini"
+    mode: 0644
+    owner: root
+    group: root
+  when: "{{ is_docker }}"
+

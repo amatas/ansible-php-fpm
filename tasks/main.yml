@@ -1,0 +1,16 @@
+---
+# tasks file for ansible-php-fpm
+
+- include: install.yml
+  tags:
+    - install
+- include: configure.yml
+  tags:
+    - configure
+- include: deploy.yml
+  tags:
+    - deploy
+- include: test.yml
+  tags:
+    - test
+

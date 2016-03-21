@@ -1,0 +1,35 @@
+---
+
+php_conf_dir: /etc
+
+php_fpm_packages:
+  - php-cli
+  - php-mysql
+  - php-gd
+  - php-xml
+  - php-fpm
+
+php_user: nginx
+php_group: nginx
+
+php_fpm_log_directory: /var/log/php-fpm
+php_fpm_session_directory: /var/lib/php/session
+php_fpm_socket: /var/run/php5-fpm.sock
+
+php_parameters:
+  expose_php: 'Off'
+  display_errors: 'Off'
+  file_uploads: 'On'
+  upload_max_filesize: '1M'
+  post_max_size: '1M'
+  max_execution_time: '60'
+  max_input_time: '60'
+  memory_limit: '256M'
+  date.timezone: 'Etc/GMT-4'
+  allow_url_fopen: 'On'
+  allow_url_include: 'Off'
+
+php_fpm_parameters:
+  listen: "{{php_fpm_socket}}"
+  user: "{{php_user}}"
+  group: "{{php_group}}"

@@ -1,0 +1,19 @@
+---
+
+- name: Install php-fpm
+  yum: 
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ php_fpm_packages }}"
+
+- name: Set directories permissions
+  file: 
+    path: "{{item}}"
+    owner: "{{php_user}}"
+    group: "{{php_group}}"
+    state: directory
+    mode: 0770
+  with_items:
+    - "{{php_fpm_log_directory}}"
+    - "{{php_fpm_session_directory}}"
+
