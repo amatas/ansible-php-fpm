@@ -8,6 +8,7 @@ php_fpm_packages:
   - php56w-gd
   - php56w-xml
   - php56w-fpm
+  - php56w-mbstring
 
 php_user: nginx
 php_group: nginx
