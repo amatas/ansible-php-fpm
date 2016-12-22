@@ -1,5 +1,10 @@
 ---
 
+- name: Add Webtatic repository
+  yum:
+    name: https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
+    state: present
+
 - name: Install php-fpm
   yum: 
     name: "{{ item }}"

@@ -1,0 +1,28 @@
+
+module sendmail 1.0;
+
+require {
+	type postfix_etc_t;
+	type postfix_public_t;
+	type httpd_t;
+	type postfix_spool_maildrop_t;
+	class process setrlimit;
+	class sock_file getattr;
+	class dir { write remove_name add_name };
+	class file { rename setattr read create write getattr unlink open };
+}
+
+#============= httpd_t ==============
+
+#!!!! This avc is allowed in the current policy
+allow httpd_t postfix_etc_t:file { read getattr open };
+allow httpd_t postfix_public_t:sock_file getattr;
+
+#!!!! This avc is allowed in the current policy
+allow httpd_t postfix_spool_maildrop_t:dir { write remove_name add_name };
+
+#!!!! This avc is allowed in the current policy
+allow httpd_t postfix_spool_maildrop_t:file { rename setattr read create write getattr unlink open };
+
+#!!!! This avc is allowed in the current policy
+allow httpd_t self:process setrlimit;
