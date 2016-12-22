@@ -3,11 +3,11 @@
 php_conf_dir: /etc
 
 php_fpm_packages:
-  - php-cli
-  - php-mysql
-  - php-gd
-  - php-xml
-  - php-fpm
+  - php56w-cli
+  - php56w-mysql
+  - php56w-gd
+  - php56w-xml
+  - php56w-fpm
 
 php_user: nginx
 php_group: nginx
