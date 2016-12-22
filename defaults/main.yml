@@ -36,3 +36,28 @@ php_fpm_parameters:
   group: "{{php_group}}"
   listen.owner: "{{php_user}}"
   listen.group: "{{php_group}}"
+
+php_fpm_devel_packages:
+  - make
+  - git
+  - gcc 
+  - gcc-c++ 
+  - libxml2-devel 
+  - libxslt-devel
+  - openssl-devel 
+  - bzip2-devel 
+  - curl-devel 
+  - libpng-devel 
+  - libjpeg-devel 
+  - libXpm-devel 
+  - freetype-devel 
+  - gmp-devel 
+  - libmcrypt-devel 
+  - mariadb-devel 
+  - aspell-devel 
+  - recode-devel 
+  - autoconf 
+  - bison 
+  - re2c 
+  - libicu-devel
+

@@ -4,15 +4,119 @@
   yum:
     name: https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
     state: present
+  when: "{{ php_fpm_source_tag is not defined }}"
 
 - name: Install php-fpm
-  yum: 
+  yum:
     name: "{{ item }}"
     state: present
   with_items: "{{ php_fpm_packages }}"
+  when: "{{ php_fpm_source_tag is not defined }}"
 
+- name: Install php from source (install devel dependencies)
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ php_fpm_devel_packages }}"
+  when: "{{ php_fpm_source_tag is defined }}"
+
+- name: Clone PHP repository
+  git:
+    repo: "https://github.com/php/php-src.git"
+    dest: /tmp/php-src
+    version: "{{ php_fpm_source_tag }}"
+  when: "{{ php_fpm_source_tag is defined }}"
+
+- name: Install php from source (build stage)
+  command: >
+    ./buildconf --force
+  args:
+    chdir: /tmp/php-src
+  when: "{{ php_fpm_source_tag is defined }}"
+
+- name: Install php from source (build stage)
+  command: >
+    ./configure --prefix=/usr/local
+    --with-config-file-path=/etc
+    --with-config-file-scan-dir=/etc/php.d
+    --enable-bcmath
+    --with-bz2
+    --with-curl
+    --enable-filter
+    --enable-fpm
+    --with-gd
+    --enable-gd-native-ttf
+    --with-freetype-dir
+    --with-jpeg-dir
+    --with-png-dir
+    --enable-intl
+    --enable-mbstring
+    --with-mcrypt
+    --enable-mysqlnd
+    --with-mysql-sock=/var/lib/mysql/mysql.sock
+    --with-mysqli=mysqlnd
+    --with-pdo-mysql=mysqlnd
+    --with-pdo-sqlite
+    --disable-phpdbg
+    --disable-phpdbg-webhelper
+    --enable-opcache
+    --with-openssl
+    --enable-simplexml
+    --with-sqlite3
+    --enable-xmlreader
+    --enable-xmlwriter
+    --enable-zip
+    --with-zlib
+  args:
+    chdir: /tmp/php-src
+  when: "{{ php_fpm_source_tag is defined }}"
+
+- name: Install php from source (build stage)
+  command: >
+    make -j4
+  args:
+    chdir: /tmp/php-src
+  when: "{{ php_fpm_source_tag is defined }}"
+
+- name: Install php from source (build stage)
+  command: >
+    make install
+  args:
+    chdir: /tmp/php-src
+  when: "{{ php_fpm_source_tag is defined }}"
+
+- name: Install php from source (uninstall devel dependencies)
+  yum:
+    name: "{{ item }}"
+    state: absent
+  with_items: "{{ php_fpm_devel_packages }}"
+  when: "{{ php_fpm_source_tag is defined }}"
+
+- name: Install php from source (remove source directory)
+  file:
+    path: /tmp/php-src
+    state: absent
+  when: "{{ php_fpm_source_tag is defined }}"
+
+- name: Install php from source (remove source directory)
+  copy:
+    src: files/php.ini
+    dest: /etc/php.ini
+  when: "{{ php_fpm_source_tag is defined }}"
+
+- name: Install php from source (remove source directory)
+  copy:
+    src: files/www.conf
+    dest: /etc/php-fpm.d/www.conf
+  when: "{{ php_fpm_source_tag is defined }}"
+
+- name: Install php from source (remove packages)
+  command: >
+    yum clean all
+  when: "{{ php_fpm_source_tag is defined }}"
+ 
 - name: Set directories permissions
-  file: 
+  file:
     path: "{{item}}"
     owner: "{{php_user}}"
     group: "{{php_group}}"
