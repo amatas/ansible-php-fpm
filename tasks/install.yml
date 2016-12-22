@@ -27,14 +27,14 @@
     version: "{{ php_fpm_source_tag }}"
   when: "{{ php_fpm_source_tag is defined }}"
 
-- name: Install php from source (build stage)
+- name: Install php from source (build stage - buildconf)
   command: >
     ./buildconf --force
   args:
     chdir: /tmp/php-src
   when: "{{ php_fpm_source_tag is defined }}"
 
-- name: Install php from source (build stage)
+- name: Install php from source (build stage - configure)
   command: >
     ./configure --prefix=/usr/local
     --with-config-file-path=/etc
@@ -71,14 +71,14 @@
     chdir: /tmp/php-src
   when: "{{ php_fpm_source_tag is defined }}"
 
-- name: Install php from source (build stage)
+- name: Install php from source (build stage - make)
   command: >
     make -j4
   args:
     chdir: /tmp/php-src
   when: "{{ php_fpm_source_tag is defined }}"
 
-- name: Install php from source (build stage)
+- name: Install php from source (build stage - make install)
   command: >
     make install
   args:
@@ -98,13 +98,19 @@
     state: absent
   when: "{{ php_fpm_source_tag is defined }}"
 
-- name: Install php from source (remove source directory)
+- name: Install php from source (copy php.ini)
   copy:
     src: files/php.ini
     dest: /etc/php.ini
   when: "{{ php_fpm_source_tag is defined }}"
 
-- name: Install php from source (remove source directory)
+- name: Install php from source (create directory php-fpm conf)
+  file:
+    path: /etc/php-fpm.d
+    state: directory
+  when: "{{ php_fpm_source_tag is defined }}"
+
+- name: Install php from source (copy php-fpm conf)
   copy:
     src: files/www.conf
     dest: /etc/php-fpm.d/www.conf
