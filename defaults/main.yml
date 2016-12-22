@@ -33,3 +33,5 @@ php_fpm_parameters:
   listen: "{{php_fpm_socket}}"
   user: "{{php_user}}"
   group: "{{php_group}}"
+  listen.owner: "{{php_user}}"
+  listen.group: "{{php_group}}"
