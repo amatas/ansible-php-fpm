@@ -36,7 +36,7 @@
 
 - name: Install php from source (build stage - configure)
   command: >
-    ./configure --prefix=/usr/local
+    ./configure --prefix=/usr
     --with-config-file-path=/etc
     --with-config-file-scan-dir=/etc/php.d
     --enable-bcmath
@@ -52,16 +52,27 @@
     --enable-intl
     --enable-mbstring
     --with-mcrypt
+    --with-mhash
+    --with-gettext
+    --with-xmlrpc
+    --with_xsl
     --enable-mysqlnd
+    --with-mysql
     --with-mysql-sock=/var/lib/mysql/mysql.sock
-    --with-mysqli=mysqlnd
-    --with-pdo-mysql=mysqlnd
+    --with-mysqli
+    --with-pdo-mysql
     --with-pdo-sqlite
     --disable-phpdbg
     --disable-phpdbg-webhelper
     --enable-opcache
+    --enable-sysvsem
+    --enable-sysvshm
+    --enable-pcntl
+    --enable-mbregex
     --with-openssl
     --enable-simplexml
+    --enable-exif
+    --with-gettext
     --with-sqlite3
     --enable-xmlreader
     --enable-xmlwriter
