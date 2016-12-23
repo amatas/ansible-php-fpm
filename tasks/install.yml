@@ -37,6 +37,7 @@
 - name: Install php from source (build stage - configure)
   command: >
     ./configure --prefix=/usr
+    --sysconfdir=/etc
     --disable-phpdbg
     --enable-bcmath
     --enable-exif
