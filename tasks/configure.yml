@@ -13,7 +13,7 @@
 - name: Put default /etc/php-fpm.conf
   template: 
     src: php-fpm.conf.j2
-    dest: "{{ php_conf_dir }}/"
+    dest: "{{ php_conf_dir }}/php-fpm.conf"
     mode: 0644
   when: "{{ php_fpm_source_tag is defined }}"
 
