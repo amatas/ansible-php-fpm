@@ -10,6 +10,13 @@
   with_dict: "{{ php_fpm_parameters }}"
   notify: restart php-fpm
 
+- name: Put default /etc/php-fpm.conf
+  template: 
+    src: php-fpm.conf.j2
+    dest: "{{ php_conf_dir }}/"
+    mode: 0644
+  when: "{{ php_fpm_source_tag is defined }}"
+
 - name: Put default php.ini
   template: 
     src: php.ini.j2 
