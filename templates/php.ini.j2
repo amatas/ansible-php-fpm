@@ -936,7 +936,14 @@ default_socket_timeout = 60
 ; Note: packaged extension modules are now loaded via the .ini files
 ; found in the directory /etc/php.d; these are loaded by default.
 ;;;;
-
+;zend_extension=/usr/lib/php/extensions/no-debug-non-zts-20131226/opcache.so
+;opcache.enable=1
+;opcache.enable_cli=1
+;opcache.memory_consumption=128
+;opcache.interned_strings_buffer=8
+;opcache.max_accelerated_files=4000
+;opcache.revalidate_freq=60
+;opcache.fast_shutdown=1
 
 ;;;;;;;;;;;;;;;;;;;
 ; Module Settings ;
