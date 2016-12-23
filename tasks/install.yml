@@ -37,46 +37,48 @@
 - name: Install php from source (build stage - configure)
   command: >
     ./configure --prefix=/usr
-    --with-config-file-path=/etc
-    --with-config-file-scan-dir=/etc/php.d
+    --disable-phpdbg
     --enable-bcmath
-    --with-bz2
-    --with-curl
+    --enable-exif
     --enable-filter
     --enable-fpm
-    --with-gd
     --enable-gd-native-ttf
-    --with-freetype-dir
-    --with-jpeg-dir
-    --with-png-dir
     --enable-intl
+    --enable-mbregex
     --enable-mbstring
-    --with-mcrypt
-    --with-mhash
-    --with-gettext
-    --with-xmlrpc
-    --with_xsl
     --enable-mysqlnd
-    --with-mysql
-    --with-mysql-sock=/var/lib/mysql/mysql.sock
-    --with-mysqli
-    --with-pdo-mysql
-    --with-pdo-sqlite
-    --disable-phpdbg
-    --disable-phpdbg-webhelper
     --enable-opcache
+    --enable-pcntl
+    --enable-simplexml
+    --enable-sockets
     --enable-sysvsem
     --enable-sysvshm
-    --enable-pcntl
-    --enable-mbregex
-    --with-openssl
-    --enable-simplexml
-    --enable-exif
-    --with-gettext
-    --with-sqlite3
     --enable-xmlreader
     --enable-xmlwriter
     --enable-zip
+    --with-bz2
+    --with-config-file-path=/etc
+    --with-config-file-scan-dir=/etc/php.d
+    --with-curl
+    --with-fpm-group=nginx
+    --with-fpm-user=nginx
+    --with-freetype-dir
+    --with-gd
+    --with-gettext
+    --with-jpeg-dir
+    --with-mcrypt
+    --with-mhash
+    --with-mysql
+    --with-mysqli
+    --with-mysql-sock=/var/lib/mysql/mysql.sock
+    --with-openssl
+    --with-pcre-regex
+    --with-pdo-mysql
+    --with-pdo-sqlite
+    --with-png-dir
+    --with-sqlite3
+    --with-xmlrpc
+    --with-xsl
     --with-zlib
   args:
     chdir: /tmp/php-src
